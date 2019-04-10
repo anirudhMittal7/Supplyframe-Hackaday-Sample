@@ -1,0 +1,23 @@
+{
+  "name": "supplyframe-hackaday-sample",
+  "version": "1.0.0",
+  "description": "coding challenge for internship ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anirudhMittal7/Supplyframe-Hackaday-Sample.git"
+  },
+  "author": "Anirudh Mittal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anirudhMittal7/Supplyframe-Hackaday-Sample/issues"
+  },
+  "homepage": "https://github.com/anirudhMittal7/Supplyframe-Hackaday-Sample#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}

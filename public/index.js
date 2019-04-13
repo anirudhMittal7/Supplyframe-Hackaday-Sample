@@ -1,51 +1,47 @@
-function SetLoader() {
-	loaderDiv = document.createElement('div');
-	loaderDiv.innerHTML = ` <div class="d-flex justify-content-center">
-  								<div class="spinner-border" role="status">
-    								<span class="sr-only">Loading...</span>
-  								</div>
-							</div>`;
-	document.getElementById('loader').appendChild(loaderDiv);
+function ShowOrHideLoadIcon(param) {
+	document.getElementsByClassName("lds-dual-ring")[0].style.display = param;
 }
-
-function ClearLoader() {
-	let loader = document.getElementById('loader');
-	if(loader.hasChildNodes()){
-		loader.removeChild(loader.childNodes[1]);
-	}
-}
- 
 
 function Populate(data) {
 	console.log(data);
+	let cards = document.getElementsByClassName("card-container");
 	data.projects.forEach(project => {
-		let columnDiv = document.createElement('div');
-		columnDiv.className='col-2';
-		let cardDiv = document.createElement('div');
-		cardDiv.class = 'card';
-		cardDiv.innerHTML = `
-							<img src=${project.image_url} class="card-img-top" alt="...">
-							<div class="card-body">
-    						<h5 class="card-title">${project.name}</h5>
-    						<p class="card-text">${project.summary}</p>
-    						<a href=${project.url} class="btn btn-primary" target="_blank">See project</a>
-  							</div>
-  							`;
-  		columnDiv.appendChild(cardDiv);
-  		document.getElementById('deck').appendChild(columnDiv);
-	});
-}
+		let date = new Date(project.updated*1000);
+		let hours = date.getHours();
+		let minutes = '0' + date.getMinutes();
+		let seconds = '0' + date.getSeconds();
+		let lastUpdatedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 
+		let article = document.createElement('article');
+		article.className="card";
+		// article.style.backgroundImage = `url(${project.image_url})`;
+
+		article.innerHTML = `<header class="card__title">
+            					<h3>${project.name}</h3>
+        					</header>
+        					<main class="card__description">
+            					<p>${project.summary}</p>
+            					<p>User ID: ${project.owner_id}</p>
+            					<ul class="list">
+            						<li>Followers: ${project.followers} </li>
+            						<li>Skulls: ${project.skulls} </li>
+            						<li>Comments: ${project.comments} </li>
+            					</ul>
+        					</main>
+        					<a href="${project.url}" class="button" target="_blank">See Project</a>`;
+        cards[0].appendChild(article);
+	})
+}
 
 
 function GetProjects(pageNum=1) {
 
-	SetLoader();
+	ShowOrHideLoadIcon("block");
 	let xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		if(xmlhttp.readyState == XMLHttpRequest.DONE) {
 			if(xmlhttp.status === 200){
-				ClearLoader();
+				ShowOrHideLoadIcon("none");
 				const data = JSON.parse(xmlhttp.responseText);
 				Populate(data);
 

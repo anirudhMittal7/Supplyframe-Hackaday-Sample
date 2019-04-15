@@ -10,8 +10,6 @@ app.get('/', (req,res) => {
 
 
 app.get('/projects', (req,res) => {
-	
-
 	const KEY='d4XbAIMISelhdFxS';
 	const url = 'https://api.hackaday.io/v1/projects';
 	const {page} = req.query;
@@ -25,7 +23,22 @@ app.get('/projects', (req,res) => {
 	.catch((error) => {
 		console.log(error);
 	})
+});
 
+app.get('/user', (req,res) => {
+	
+	const {userId} = req.query;
+	console.log(`fetching user details for user ${userId}`);
+	const KEY='d4XbAIMISelhdFxS';
+	const url = `http://api.hackaday.io/v1/users/${userId}`;
+	axios
+	.get(url, {params:{api_key : KEY}})
+	.then((response) => {
+		res.status(200).json(response.data);
+	})
+	.catch((error) => {
+		console.log(error);
+	})
 });
 
 

@@ -4,7 +4,8 @@ function ShowOrHide(element,param) {
 
 function RemoveToolTip(tooltipId) {
 	let element = document.getElementById(`user${tooltipId}`);
-	element.parentNode.removeChild(element);
+	if(element && element.parentNode)
+		element.parentNode.removeChild(element);
 
 }
 
@@ -58,7 +59,7 @@ function Populate(data) {
         					</header>
         					<main class="card__description">
             					<p>${project.summary}</p>
-            					<div id="tooltip${idx}" onmouseover="FetchUserDetails(${project.owner_id}, ${idx})" onmouseout="RemoveToolTip(${idx})">
+            					<div id="tooltip${idx}" onmouseover="FetchUserDetails(${project.owner_id}, ${idx})" onmouseout="RemoveToolTip(${idx})" onblur="RemoveToolTip(${idx})">
             						User ID: ${project.owner_id}	
             					</div>
             					<ul class="list">

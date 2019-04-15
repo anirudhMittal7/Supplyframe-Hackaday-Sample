@@ -1,9 +1,14 @@
 .header{
-    color: #f44161;
-     display: flex;
+  color: #f44161;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
+}
+
+#pageNumDisplay{
+  color: #f44161;
+  font-style: oblique;
 }
 
 .card-container {
@@ -50,7 +55,7 @@ body {
     text-align: center;
 }
 .button {
-    display: block;
+    
     background-color: black;
     padding: 5px 5px;
     color: white;
@@ -58,9 +63,11 @@ body {
     text-align: center;
     transition: .3s ease-out;
     margin: 0 auto;
+    cursor: pointer;
     &:hover {
         background-color: darken(tomato, 10%);
     }
+
 
 }
 
@@ -104,6 +111,11 @@ body {
   }
 }
 
+.parent{
+  display: flex;
+  justify-content: space-between;
+}
+
 
 .button {
   background-color: #4CAF50;
@@ -112,8 +124,7 @@ body {
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
   font-size: 16px;
   margin: 4px auto;
-  cursor: pointer;
+  
 }

@@ -10,14 +10,22 @@
 <body onload="GetProjects()">
 	
 	<h1 class="header">Hackaday Projects </h1>
+	<div class="parent">
+		<button class="button" id="topPrevButton" onclick="GetPreviousPageProjects()"> &larr; Previous</button>
+		<h2 id="pageNumDisplay"></h2>
+		<button class="button"  onclick="GetNextPageProjects()">Next &rarr;</button>		
+	</div>
 	<div class="lds-dual-ring"></div>
 	<div class="card-container"></div>
 	<div id="pagination"></div>
 
-	<button class="button" id="prevbutton" onclick="GetPreviousPageProjects()"> &larr; Previous</button>
-	<button class="button" id="nextbutton" onclick="GetNextPageProjects()">Next &rarr;</button>	
-	<button class="button" id="topbutton">Back to Top</button>
+	<div class="parent">
+		<button class="button" id="prevbutton" onclick="GetPreviousPageProjects()" disabled> &larr; Previous</button>
+		<button class="button" id="topbutton">Back to Top &uarr;</button>
+		<button class="button" id="nextbutton" onclick="GetNextPageProjects()">Next &rarr;</button>	
 
+	</div>
+	
 
 	<script type="text/javascript" src="index.js"></script>
 </body>

@@ -12,14 +12,17 @@ function RemoveToolTip(tooltipId) {
 function CreateToolTip(userData, tooltipId) {
 	let userDiv = document.createElement("div");
 	userDiv.style.position='absolute';
-	userDiv.style.zIndex=2;
-	userDiv.id = `user${tooltipId}`;
+	userDiv.style.width = '30rem';
+	userDiv.style.borderRadius = "1em";
+	userDiv.style.border = "solid thin gray";
 	userDiv.style.backgroundColor='lightgrey';
+	userDiv.id = `user${tooltipId}`;
+	
 	userDiv.innerHTML = `
-							<span>Username: ${userData.username} </span><br/>
-							<span>Screen Name: ${userData.screen_name} </span></br>
-							<span>Location: ${userData.location} </span></br>
-							<span>About: ${userData.about_me} </span></br>
+							<span><b>Username:</b> ${userData.username} </span><br/>
+							<span><b>Screen Name:</b> ${userData.screen_name} </span></br>
+							<span><b>Location: </b> ${userData.location} </span></br>
+							<span><b>About: </b> ${userData.about_me} </span></br>
 						`;
 	document.getElementById(`tooltip${tooltipId}`).appendChild(userDiv);
 }
@@ -82,15 +85,14 @@ function GetProjects(pageNum) {
 	ShowOrHide(document.getElementById("topbutton"), "none");
 	ShowOrHide(document.getElementById("prevbutton"), "none");
 	ShowOrHide(document.getElementById("nextbutton"), "none");
-
 	if(!pageNum)
 		if(!parseInt(window.location.href.split('=')[1]))
 			pageNum=1;
 		else
 			pageNum = parseInt(window.location.href.split('=')[1]);
-	
-	console.log(`fetching for ${pageNum}`);
 	window.history.pushState(null,'', `?page=${pageNum}`);
+
+	document.getElementById('pageNumDisplay').innerHTML = `Fetching Page ${pageNum}...`;
 	let xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		if(xmlhttp.readyState == XMLHttpRequest.DONE) {
@@ -99,6 +101,7 @@ function GetProjects(pageNum) {
 				ShowOrHide(document.getElementById("topbutton"), "block");
 				ShowOrHide(document.getElementById("prevbutton"), "block");
 				ShowOrHide(document.getElementById("nextbutton"), "block");
+				document.getElementById('pageNumDisplay').innerHTML = `Page ${pageNum}`;
 				const data = JSON.parse(xmlhttp.responseText);
 				Populate(data);
 			} else {
@@ -111,9 +114,7 @@ function GetProjects(pageNum) {
 }
 
 function GetPreviousPageProjects() {
-	console.log('prev page');
 	let pageNum = parseInt(window.location.href.split('=')[1]);
-	console.log(pageNum);
 	if(pageNum>=2){
 		let cards = document.getElementsByClassName("card-container");
 		cards[0].innerHTML='';
@@ -123,7 +124,6 @@ function GetPreviousPageProjects() {
 
 function GetNextPageProjects() {
 	let pageNum = parseInt(window.location.href.split('=')[1]);
-	console.log(pageNum);
 	let cards = document.getElementsByClassName("card-container");
 	cards[0].innerHTML='';
 	GetProjects(pageNum+1);
@@ -135,5 +135,4 @@ document.getElementById("topbutton").addEventListener("click", function(){
   		left: 0,
   		behavior: 'smooth'
 	});
-
 });

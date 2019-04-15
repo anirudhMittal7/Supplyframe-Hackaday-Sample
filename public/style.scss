@@ -28,10 +28,14 @@
 html {
     font-size: 16px;
     font-family: 'Open Sans', 'Helvetica Neue', 'Arial', sans-serif;
+    position: relative;
+    overflow: auto;
 }
 
 body {
     background-color: #fef;
+    position: relative;
+    overflow: auto;
 }
 * {
     box-sizing: border-box;

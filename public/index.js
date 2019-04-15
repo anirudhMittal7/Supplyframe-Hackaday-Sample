@@ -77,15 +77,20 @@ function Populate(data) {
 }
 
 
-function GetProjects(pageNum=1) {
+function GetProjects(pageNum) {
 	ShowOrHide(document.getElementsByClassName("lds-dual-ring")[0], "block");
 	ShowOrHide(document.getElementById("topbutton"), "none");
 	ShowOrHide(document.getElementById("prevbutton"), "none");
 	ShowOrHide(document.getElementById("nextbutton"), "none");
 
-	let updatedUrl = `${document.location}?page=${pageNum}`;
-	window.history.replaceState({},document.title, updatedUrl);
-
+	if(!pageNum)
+		if(!parseInt(window.location.href.split('=')[1]))
+			pageNum=1;
+		else
+			pageNum = parseInt(window.location.href.split('=')[1]);
+	
+	console.log(`fetching for ${pageNum}`);
+	window.history.pushState(null,'', `?page=${pageNum}`);
 	let xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		if(xmlhttp.readyState == XMLHttpRequest.DONE) {
@@ -103,6 +108,25 @@ function GetProjects(pageNum=1) {
 	}
 	xmlhttp.open('GET',`projects?page=${pageNum}`,true);
 	xmlhttp.send();
+}
+
+function GetPreviousPageProjects() {
+	console.log('prev page');
+	let pageNum = parseInt(window.location.href.split('=')[1]);
+	console.log(pageNum);
+	if(pageNum>=2){
+		let cards = document.getElementsByClassName("card-container");
+		cards[0].innerHTML='';
+		GetProjects(pageNum-1);
+	}
+}
+
+function GetNextPageProjects() {
+	let pageNum = parseInt(window.location.href.split('=')[1]);
+	console.log(pageNum);
+	let cards = document.getElementsByClassName("card-container");
+	cards[0].innerHTML='';
+	GetProjects(pageNum+1);
 }
 
 document.getElementById("topbutton").addEventListener("click", function(){

@@ -80,12 +80,20 @@ function Populate(data) {
 function GetProjects(pageNum=1) {
 	ShowOrHide(document.getElementsByClassName("lds-dual-ring")[0], "block");
 	ShowOrHide(document.getElementById("topbutton"), "none");
+	ShowOrHide(document.getElementById("prevbutton"), "none");
+	ShowOrHide(document.getElementById("nextbutton"), "none");
+
+	let updatedUrl = `${document.location}?page=${pageNum}`;
+	window.history.replaceState({},document.title, updatedUrl);
+
 	let xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		if(xmlhttp.readyState == XMLHttpRequest.DONE) {
 			if(xmlhttp.status === 200){
 				ShowOrHide(document.getElementsByClassName("lds-dual-ring")[0], "none");
 				ShowOrHide(document.getElementById("topbutton"), "block");
+				ShowOrHide(document.getElementById("prevbutton"), "block");
+				ShowOrHide(document.getElementById("nextbutton"), "block");
 				const data = JSON.parse(xmlhttp.responseText);
 				Populate(data);
 			} else {
